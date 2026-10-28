@@ -4,93 +4,457 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student API Interface</title>
+
+    <title>Student Information System</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 20px;
+            background: #f2f6fc;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        header {
+            background: linear-gradient(120deg, #123c69, #087f8c);
+            color: white;
+            padding: 30px 20px;
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #d8f3f5;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border-left: 5px solid #19a878;
+            box-shadow: 0 5px 20px #123c690d;
+        }
+
+        .welcome h2 {
+            color: #123c69;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px #123c690d;
+            border: 1px solid #e7edf5;
+            min-width: 0;
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            background: #e3f4f5;
+            border-radius: 13px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            margin-bottom: 17px;
+        }
+
+        .card h2 {
+            color: #123c69;
+            font-size: 21px;
+            margin-bottom: 9px;
+        }
+
+        .description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
 
         button {
-            padding: 8px 14px;
-            margin: 5px;
+            background: #1765a8;
+            color: white;
+            border: none;
+            padding: 12px 17px;
+            border-radius: 9px;
             cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #123c69;
+            transform: translateY(-1px);
         }
 
         input {
-            padding: 8px;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d5deea;
+            border-radius: 9px;
+            margin-bottom: 12px;
+            outline: none;
+            font-size: 15px;
         }
 
-        #result {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #cccccc;
+        input:focus {
+            border-color: #19a878;
+            box-shadow: 0 0 0 3px #19a87820;
+        }
+
+        #result,
+        #greeting,
+        #studentList {
+            background: #f4f9fc;
+            border-radius: 10px;
+            margin-top: 18px;
+            padding: 16px;
+            overflow-wrap: anywhere;
+            line-height: 1.9;
+        }
+
+        #result:empty,
+        #greeting:empty,
+        #studentList:empty {
+            display: none;
+        }
+
+        .student-row {
+            border-bottom: 1px solid #e0e9f2;
+            padding: 10px 0;
+        }
+
+        .student-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #64748b;
+        }
+
+        .value {
+            color: #123c69;
+            font-weight: 600;
+        }
+
+        .database-card {
+            margin-top: 24px;
+        }
+
+        footer {
+            text-align: center;
+            color: #8290a2;
+            padding: 25px 15px;
+            font-size: 13px;
+        }
+
+        @media (max-width: 650px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 25px;
+            }
+
+            main {
+                margin-top: 20px;
+                padding: 0 14px;
+            }
+
+            .card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <h1>Student API Interface</h1>
+    <header>
+        <div class="header-content">
+            <h1>🎓 Student Information System</h1>
+            <p>A simple and modern Student API Interface</p>
+        </div>
+    </header>
 
-    <!-- Student Information Section -->
-    <h2>Student Information</h2>
+    <main>
 
-    <button onclick="loadStudent()">Load Student Information</button>
+        <!-- Welcome Section -->
+        <section class="welcome">
+            <h2>Welcome, Gella Gale! 👋</h2>
+            <p>
+                Explore student information, view database records,
+                and try the Greeting API using the tools below.
+            </p>
+        </section>
 
-    <div id="result"></div>
+        <!-- Main Cards -->
+        <div class="cards">
 
-    <hr>
+            <!-- Student Information API -->
+            <section class="card">
+                <div class="icon">👨‍🎓</div>
 
-    <!-- Greeting API Section -->
-    <h2>Greeting API</h2>
+                <h2>Student Information</h2>
 
-    <input
-        type="text"
-        id="nameInput"
-        placeholder="Enter your first name"
-    >
+                <p class="description">
+                    Retrieve student information from your Flask API.
+                </p>
 
-    <button onclick="sayHello()">Say Hello</button>
+                <button onclick="loadStudent()">
+                    Load Student Information
+                </button>
 
-    <p id="greeting"></p>
+                <div id="result" aria-live="polite"></div>
+            </section>
+
+            <!-- Greeting API -->
+            <section class="card">
+                <div class="icon">💬</div>
+
+                <h2>Greeting API</h2>
+
+                <p class="description">
+                    Enter a name and receive a personalized greeting.
+                </p>
+
+                <input
+                    type="text"
+                    id="nameInput"
+                    placeholder="Enter your name"
+                    maxlength="100"
+                >
+
+                <button onclick="sayHello()">Say Hello</button>
+
+                <p id="greeting" aria-live="polite"></p>
+            </section>
+
+        </div>
+
+        <!-- Step 8: Students from Database -->
+        <section class="card database-card">
+            <div class="icon">📋</div>
+
+            <h2>Students from Database</h2>
+
+            <p class="description">
+                View all student records saved in your SQLite database.
+            </p>
+
+            <button onclick="loadStudents()">
+                Load Students
+            </button>
+
+            <div id="studentList" aria-live="polite"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        © 2026 Student Information System | Built with Flask and Python
+    </footer>
 
     <script>
-        function loadStudent() {
-            fetch('/student')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('result').innerHTML =
-                        '<p><b>Student ID:</b> ' + data.student_id + '</p>' +
-                        '<p><b>Name:</b> ' + data.name + '</p>' +
-                        '<p><b>Program:</b> ' + data.program + '</p>' +
-                        '<p><b>Year:</b> ' + data.year + '</p>' +
-                        '<p><b>Section:</b> ' + data.section + '</p>';
-                })
-                .catch(error => {
-                    document.getElementById('result').innerText =
-                        'Unable to retrieve data.';
-                    console.error('Error:', error);
-                });
+
+        // Display student information
+        async function loadStudent() {
+            const result = document.getElementById('result');
+
+            result.textContent = 'Loading student information...';
+
+            try {
+                const response = await fetch('/student');
+
+                if (!response.ok) {
+                    throw new Error('Request failed');
+                }
+
+                const data = await response.json();
+                const students = Array.isArray(data) ? data : [data];
+
+                if (students.length === 0) {
+                    result.textContent = 'No student records found.';
+                    return;
+                }
+
+                result.innerHTML = students.map(student => `
+                    <div class="student-row">
+                        <span class="label">Student ID:</span>
+                        <span class="value">${escapeHTML(student.student_id)}</span>
+                    </div>
+
+                    <div class="student-row">
+                        <span class="label">Name:</span>
+                        <span class="value">${escapeHTML(student.name)}</span>
+                    </div>
+
+                    <div class="student-row">
+                        <span class="label">Program:</span>
+                        <span class="value">${escapeHTML(student.program)}</span>
+                    </div>
+
+                    <div class="student-row">
+                        <span class="label">Year:</span>
+                        <span class="value">${escapeHTML(student.year)}</span>
+                    </div>
+
+                    <div class="student-row">
+                        <span class="label">Section:</span>
+                        <span class="value">${escapeHTML(student.section)}</span>
+                    </div>
+                `).join(
+                    '<hr style="border:0;border-top:1px solid #dce7ef;margin:15px 0">'
+                );
+
+            } catch (error) {
+                result.textContent =
+                    'Unable to retrieve data. Check your Flask application.';
+                console.error(error);
+            }
         }
 
-        function sayHello() {
-            const name = document.getElementById('nameInput').value;
 
-            fetch('/hello?name=' + encodeURIComponent(name))
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('greeting').innerText =
-                        data.message;
-                })
-                .catch(error => {
-                    document.getElementById('greeting').innerText =
-                        'Unable to retrieve greeting.';
-                    console.error('Error:', error);
-                });
+        // Greeting API
+        async function sayHello() {
+            const name = document.getElementById('nameInput').value.trim();
+            const greeting = document.getElementById('greeting');
+
+            greeting.textContent = 'Loading greeting...';
+
+            try {
+                const response = await fetch(
+                    '/hello?name=' + encodeURIComponent(name)
+                );
+
+                if (!response.ok) {
+                    throw new Error('Request failed');
+                }
+
+                const data = await response.json();
+
+                greeting.textContent = '✨ ' + data.message;
+
+            } catch (error) {
+                greeting.textContent = 'Unable to retrieve greeting.';
+                console.error(error);
+            }
         }
+
+
+        // Step 8: Load all students from the database
+        async function loadStudents() {
+            const studentList = document.getElementById('studentList');
+
+            studentList.textContent = 'Loading student records...';
+
+            try {
+                const response = await fetch('/students');
+
+                if (!response.ok) {
+                    throw new Error('Failed to load students');
+                }
+
+                const data = await response.json();
+
+                if (data.length === 0) {
+                    studentList.textContent = 'No student records found.';
+                    return;
+                }
+
+                studentList.innerHTML = data.map(student => `
+                    <div class="student-row">
+
+                        <div>
+                            <span class="label">Database ID:</span>
+                            <span class="value">${escapeHTML(student.id)}</span>
+                        </div>
+
+                        <div>
+                            <span class="label">Student ID:</span>
+                            <span class="value">${escapeHTML(student.student_id)}</span>
+                        </div>
+
+                        <div>
+                            <span class="label">Name:</span>
+                            <span class="value">${escapeHTML(student.name)}</span>
+                        </div>
+
+                        <div>
+                            <span class="label">Program:</span>
+                            <span class="value">${escapeHTML(student.program)}</span>
+                        </div>
+
+                        <div>
+                            <span class="label">Year:</span>
+                            <span class="value">${escapeHTML(student.year)}</span>
+                        </div>
+
+                        <div>
+                            <span class="label">Section:</span>
+                            <span class="value">${escapeHTML(student.section)}</span>
+                        </div>
+
+                    </div>
+                `).join(
+                    '<hr style="border:0;border-top:1px solid #dce7ef;margin:15px 0">'
+                );
+
+            } catch (error) {
+                studentList.textContent =
+                    'Unable to retrieve student records. Check your Flask application.';
+                console.error(error);
+            }
+        }
+
+
+        // Safely display database values
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, character => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            })[character]);
+        }
+
     </script>
 
 </body>
