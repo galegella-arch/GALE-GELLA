@@ -4,11 +4,13 @@ from flask import Flask, jsonify, request, render_template
 app = Flask(__name__)
 
 
+# Home page
 @app.route('/')
 def home():
     return render_template('index.html')
 
 
+# Student Information API
 @app.route('/student')
 def get_student():
     return jsonify({
@@ -20,14 +22,19 @@ def get_student():
     })
 
 
+# Greeting API
 @app.route('/hello')
 def say_hello():
-    name = request.args.get('name', 'Student')
+    name = request.args.get('name', 'Student').strip()
+
+    if not name:
+        name = 'Student'
 
     return jsonify({
         "message": f"Hello, {name}!"
     })
 
 
+# Run the Flask application
 if __name__ == '__main__':
     app.run(debug=True)
