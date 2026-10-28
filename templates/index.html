@@ -4,458 +4,511 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Student Information System</title>
 
     <style>
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
         }
 
         body {
-            background: #f2f6fc;
-            color: #1e293b;
-            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eaf3fb;
+            color: #17365d;
         }
 
         header {
-            background: linear-gradient(120deg, #123c69, #087f8c);
+            background: linear-gradient(135deg, #1768ac, #19a7a0);
             color: white;
-            padding: 30px 20px;
-        }
-
-        .header-content {
-            max-width: 1000px;
-            margin: auto;
+            text-align: center;
+            padding: 30px 15px;
         }
 
         header h1 {
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-
-        header p {
-            color: #d8f3f5;
+            margin: 0 0 10px;
         }
 
         main {
             max-width: 1000px;
-            margin: 30px auto;
-            padding: 0 20px;
+            margin: 25px auto;
+            padding: 0 16px 35px;
         }
 
-        .welcome {
+        .database-card {
             background: white;
-            border-radius: 16px;
             padding: 24px;
-            margin-bottom: 24px;
-            border-left: 5px solid #19a878;
-            box-shadow: 0 5px 20px #123c690d;
+            margin-bottom: 22px;
+            border-radius: 12px;
+            border-top: 5px solid #19a7a0;
+            box-shadow: 0 4px 12px rgba(23, 54, 93, 0.10);
         }
 
-        .welcome h2 {
-            color: #123c69;
-            margin-bottom: 8px;
-        }
-
-        .welcome p {
-            color: #64748b;
-            line-height: 1.6;
-        }
-
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 24px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            box-shadow: 0 5px 20px #123c690d;
-            border: 1px solid #e7edf5;
-            min-width: 0;
-        }
-
-        .icon {
-            width: 50px;
-            height: 50px;
-            background: #e3f4f5;
-            border-radius: 13px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 25px;
-            margin-bottom: 17px;
-        }
-
-        .card h2 {
-            color: #123c69;
-            font-size: 21px;
-            margin-bottom: 9px;
+        h2 {
+            color: #1768ac;
+            margin-top: 0;
         }
 
         .description {
-            color: #64748b;
-            font-size: 14px;
+            color: #63758b;
             line-height: 1.6;
-            margin-bottom: 20px;
         }
 
-        button {
-            background: #1765a8;
-            color: white;
-            border: none;
-            padding: 12px 17px;
-            border-radius: 9px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-
-        button:hover {
-            background: #123c69;
-            transform: translateY(-1px);
+        label {
+            display: block;
+            margin: 14px 0 6px;
+            font-weight: bold;
+            color: #34516e;
         }
 
         input {
             width: 100%;
             padding: 12px;
-            border: 1px solid #d5deea;
-            border-radius: 9px;
-            margin-bottom: 12px;
-            outline: none;
+            border: 1px solid #cbd7e4;
+            border-radius: 7px;
             font-size: 15px;
+            background: #fafdff;
         }
 
         input:focus {
-            border-color: #19a878;
-            box-shadow: 0 0 0 3px #19a87820;
+            outline: 2px solid #91c8f5;
+            border-color: #1768ac;
         }
 
-        #result,
-        #greeting,
-        #studentList {
-            background: #f4f9fc;
-            border-radius: 10px;
-            margin-top: 18px;
-            padding: 16px;
-            overflow-wrap: anywhere;
-            line-height: 1.9;
+        button {
+            border: none;
+            border-radius: 7px;
+            padding: 12px 18px;
+            margin: 10px 6px 0 0;
+            background: #1768ac;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
-        #result:empty,
-        #greeting:empty,
-        #studentList:empty {
-            display: none;
+        button:hover {
+            background: #104d82;
+            transform: translateY(-1px);
+        }
+
+        .secondary-button {
+            background: #168b85;
+        }
+
+        .secondary-button:hover {
+            background: #106b67;
+        }
+
+        .delete-button {
+            background: #c0392b;
+        }
+
+        .delete-button:hover {
+            background: #922b21;
         }
 
         .student-row {
-            border-bottom: 1px solid #e0e9f2;
-            padding: 10px 0;
+            padding: 18px;
+            margin-top: 12px;
+            border-radius: 8px;
+            background: #f3f8fc;
+            border: 1px solid #dce8f2;
+            overflow-wrap: anywhere;
         }
 
-        .student-row:last-child {
-            border-bottom: none;
+        .student-row p {
+            margin: 8px 0;
+            line-height: 1.5;
         }
 
-        .label {
-            color: #64748b;
+        .student-row strong {
+            color: #123e68;
         }
 
-        .value {
-            color: #123c69;
-            font-weight: 600;
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #168b85;
+            overflow-wrap: anywhere;
         }
 
-        .database-card {
-            margin-top: 24px;
+        .empty-message {
+            color: #65788c;
+            padding: 12px 0;
+        }
+
+        .crud-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 18px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
         }
 
         footer {
+            background: #17365d;
+            color: white;
             text-align: center;
-            color: #8290a2;
-            padding: 25px 15px;
-            font-size: 13px;
+            padding: 22px;
         }
 
-        @media (max-width: 650px) {
-            .cards {
+        @media (max-width: 600px) {
+            main {
+                margin-top: 15px;
+                padding: 0 10px 25px;
+            }
+
+            .database-card {
+                padding: 17px;
+            }
+
+            .crud-grid {
                 grid-template-columns: 1fr;
             }
 
-            header h1 {
-                font-size: 25px;
-            }
-
-            main {
-                margin-top: 20px;
-                padding: 0 14px;
-            }
-
-            .card {
-                padding: 20px;
+            .full-width {
+                grid-column: auto;
             }
         }
     </style>
 </head>
 
 <body>
+<header>
+    <h1>Student Information System</h1>
+    <p>Manage student records using Flask and SQLite</p>
+</header>
 
-    <header>
-        <div class="header-content">
-            <h1>🎓 Student Information System</h1>
-            <p>A simple and modern Student API Interface</p>
+<main>
+    <section class="database-card">
+        <h2>Students from Database</h2>
+        <p class="description">View all student records saved in your database.</p>
+        <button onclick="loadStudents()">Load Students</button>
+        <div id="studentList">
+            <p class="empty-message">Loading student records...</p>
         </div>
-    </header>
+    </section>
 
-    <main>
+    <section class="database-card">
+        <h2>Search Students by Program</h2>
+        <p class="description">Find students enrolled in a specific program.</p>
+        <label for="programInput">Search Program</label>
+        <input id="programInput" placeholder="Example: BSIT">
+        <button onclick="searchProgram()">Search Program</button>
+        <div id="programResults"></div>
+    </section>
 
-        <!-- Welcome Section -->
-        <section class="welcome">
-            <h2>Welcome, Gella Gale! 👋</h2>
-            <p>
-                Explore student information, view database records,
-                and try the Greeting API using the tools below.
-            </p>
-        </section>
+    <section class="database-card">
+        <h2>Greeting API</h2>
+        <p class="description">Enter your name to receive a greeting.</p>
+        <label for="greetingName">Name</label>
+        <input id="greetingName" placeholder="Enter your name">
+        <button class="secondary-button" onclick="sayHello()">Say Hello</button>
+        <p id="greeting" class="message"></p>
+    </section>
 
-        <!-- Main Cards -->
-        <div class="cards">
+    <section class="database-card">
+        <h2>Manage Students (CRUD)</h2>
+        <p class="description">Add, view, update, and delete student records.</p>
 
-            <!-- Student Information API -->
-            <section class="card">
-                <div class="icon">👨‍🎓</div>
-
-                <h2>Student Information</h2>
-
-                <p class="description">
-                    Retrieve student information from your Flask API.
-                </p>
-
-                <button onclick="loadStudent()">
-                    Load Student Information
+        <div class="crud-grid">
+            <div class="full-width">
+                <label for="crudId">Database ID</label>
+                <input type="number" id="crudId" min="1"
+                       placeholder="Enter database ID">
+                <button class="secondary-button"
+                        onclick="findStudentForEdit()">
+                    Load Student for Editing
                 </button>
+            </div>
 
-                <div id="result" aria-live="polite"></div>
-            </section>
+            <div>
+                <label for="crudStudentId">Student ID</label>
+                <input id="crudStudentId" placeholder="24-00290">
+            </div>
 
-            <!-- Greeting API -->
-            <section class="card">
-                <div class="icon">💬</div>
+            <div>
+                <label for="crudName">Name</label>
+                <input id="crudName" placeholder="Student name">
+            </div>
 
-                <h2>Greeting API</h2>
+            <div>
+                <label for="crudProgram">Program</label>
+                <input id="crudProgram" placeholder="BSIT">
+            </div>
 
-                <p class="description">
-                    Enter a name and receive a personalized greeting.
-                </p>
+            <div>
+                <label for="crudYear">Year</label>
+                <input type="number" id="crudYear" min="1" max="6"
+                       step="1" placeholder="Example: 3">
+            </div>
 
-                <input
-                    type="text"
-                    id="nameInput"
-                    placeholder="Enter your name"
-                    maxlength="100"
-                >
-
-                <button onclick="sayHello()">Say Hello</button>
-
-                <p id="greeting" aria-live="polite"></p>
-            </section>
-
+            <div class="full-width">
+                <label for="crudSection">Section</label>
+                <input id="crudSection" placeholder="Example: A">
+            </div>
         </div>
 
-        <!-- Step 8: Students from Database -->
-        <section class="card database-card">
-            <div class="icon">📋</div>
+        <button onclick="addStudent()">Add Student</button>
+        <button class="secondary-button" onclick="editStudent()">
+            Update Student
+        </button>
+        <button class="delete-button" onclick="deleteStudent()">
+            Delete Student
+        </button>
 
-            <h2>Students from Database</h2>
+        <p id="crudMessage" class="message"></p>
+    </section>
+</main>
 
-            <p class="description">
-                View all student records saved in your SQLite database.
-            </p>
+<footer>
+    Student Information System | Flask + SQLite
+</footer>
 
-            <button onclick="loadStudents()">
-                Load Students
-            </button>
+<script>
+    async function api(url, options = {}) {
+        const response = await fetch(url, options);
+        const result = await response.json();
 
-            <div id="studentList" aria-live="polite"></div>
-        </section>
+        if (!response.ok) {
+            throw new Error(result.error || "Request failed.");
+        }
 
-    </main>
+        return result;
+    }
 
-    <footer>
-        © 2026 Student Information System | Built with Flask and Python
-    </footer>
+    function showMessage(message) {
+        document.getElementById("crudMessage").textContent = message;
+    }
 
-    <script>
+    function getFormData() {
+        return {
+            student_id: document.getElementById("crudStudentId").value.trim(),
+            name: document.getElementById("crudName").value.trim(),
+            program: document.getElementById("crudProgram").value.trim(),
+            year: Number(document.getElementById("crudYear").value),
+            section: document.getElementById("crudSection").value.trim()
+        };
+    }
 
-        // Display student information
-        async function loadStudent() {
-            const result = document.getElementById('result');
+    function validate(data) {
+        const year = document.getElementById("crudYear").value.trim();
 
-            result.textContent = 'Loading student information...';
+        if (!data.student_id || !data.name || !data.program ||
+            !year || !data.section ||
+            !Number.isInteger(data.year) ||
+            data.year < 1 || data.year > 6) {
+            showMessage("Please fill in all fields correctly.");
+            return false;
+        }
 
-            try {
-                const response = await fetch('/student');
+        return true;
+    }
 
-                if (!response.ok) {
-                    throw new Error('Request failed');
-                }
+    function clearForm() {
+        ["crudId", "crudStudentId", "crudName",
+         "crudProgram", "crudYear", "crudSection"].forEach(id => {
+            document.getElementById(id).value = "";
+        });
+    }
 
-                const data = await response.json();
-                const students = Array.isArray(data) ? data : [data];
+    function createStudentCard(student, includeSelect = false) {
+        const card = document.createElement("div");
+        card.className = "student-row";
 
-                if (students.length === 0) {
-                    result.textContent = 'No student records found.';
-                    return;
-                }
+        [
+            ["Database ID", student.id],
+            ["Student ID", student.student_id],
+            ["Name", student.name],
+            ["Program", student.program],
+            ["Year", student.year],
+            ["Section", student.section]
+        ].forEach(([label, value]) => {
+            const p = document.createElement("p");
+            const strong = document.createElement("strong");
+            strong.textContent = label + ": ";
+            p.append(strong, document.createTextNode(value ?? ""));
+            card.appendChild(p);
+        });
 
-                result.innerHTML = students.map(student => `
-                    <div class="student-row">
-                        <span class="label">Student ID:</span>
-                        <span class="value">${escapeHTML(student.student_id)}</span>
-                    </div>
+        if (includeSelect) {
+            const button = document.createElement("button");
+            button.className = "secondary-button";
+            button.textContent = "Select for Editing";
 
-                    <div class="student-row">
-                        <span class="label">Name:</span>
-                        <span class="value">${escapeHTML(student.name)}</span>
-                    </div>
+            button.onclick = () => {
+                document.getElementById("crudId").value = student.id;
+                findStudentForEdit();
+            };
 
-                    <div class="student-row">
-                        <span class="label">Program:</span>
-                        <span class="value">${escapeHTML(student.program)}</span>
-                    </div>
+            card.appendChild(button);
+        }
 
-                    <div class="student-row">
-                        <span class="label">Year:</span>
-                        <span class="value">${escapeHTML(student.year)}</span>
-                    </div>
+        return card;
+    }
 
-                    <div class="student-row">
-                        <span class="label">Section:</span>
-                        <span class="value">${escapeHTML(student.section)}</span>
-                    </div>
-                `).join(
-                    '<hr style="border:0;border-top:1px solid #dce7ef;margin:15px 0">'
-                );
+    async function loadStudents() {
+        const list = document.getElementById("studentList");
+        list.textContent = "Loading students...";
 
-            } catch (error) {
-                result.textContent =
-                    'Unable to retrieve data. Check your Flask application.';
-                console.error(error);
+        try {
+            const students = await api("/students");
+            list.replaceChildren();
+
+            if (students.length === 0) {
+                list.textContent = "No student records found.";
+                return;
             }
+
+            students.forEach(student =>
+                list.appendChild(createStudentCard(student, true))
+            );
+        } catch (error) {
+            list.textContent = error.message;
+        }
+    }
+
+    async function searchProgram() {
+        const program = document.getElementById("programInput").value.trim();
+        const results = document.getElementById("programResults");
+
+        if (!program) {
+            results.textContent = "Please enter a program, such as BSIT.";
+            return;
         }
 
+        results.textContent = "Searching...";
 
-        // Greeting API
-        async function sayHello() {
-            const name = document.getElementById('nameInput').value.trim();
-            const greeting = document.getElementById('greeting');
+        try {
+            const students = await api(
+                "/students/program/" + encodeURIComponent(program)
+            );
 
-            greeting.textContent = 'Loading greeting...';
+            results.replaceChildren();
 
-            try {
-                const response = await fetch(
-                    '/hello?name=' + encodeURIComponent(name)
-                );
-
-                if (!response.ok) {
-                    throw new Error('Request failed');
-                }
-
-                const data = await response.json();
-
-                greeting.textContent = '✨ ' + data.message;
-
-            } catch (error) {
-                greeting.textContent = 'Unable to retrieve greeting.';
-                console.error(error);
+            if (students.length === 0) {
+                results.textContent = "No students found for " + program + ".";
+                return;
             }
+
+            students.forEach(student =>
+                results.appendChild(createStudentCard(student))
+            );
+        } catch (error) {
+            results.textContent = error.message;
+        }
+    }
+
+    async function sayHello() {
+        const name = document.getElementById("greetingName").value.trim();
+
+        try {
+            const result = await api(
+                "/hello?name=" + encodeURIComponent(name || "Student")
+            );
+            document.getElementById("greeting").textContent = result.message;
+        } catch (error) {
+            document.getElementById("greeting").textContent = error.message;
+        }
+    }
+
+    async function findStudentForEdit() {
+        const id = document.getElementById("crudId").value.trim();
+
+        if (!/^[1-9]\d*$/.test(id)) {
+            showMessage("Enter a valid Database ID.");
+            return;
         }
 
+        try {
+            const student = await api("/api/students/" + encodeURIComponent(id));
 
-        // Step 8: Load all students from the database
-        async function loadStudents() {
-            const studentList = document.getElementById('studentList');
+            document.getElementById("crudStudentId").value = student.student_id;
+            document.getElementById("crudName").value = student.name;
+            document.getElementById("crudProgram").value = student.program;
+            document.getElementById("crudYear").value = student.year;
+            document.getElementById("crudSection").value = student.section;
 
-            studentList.textContent = 'Loading student records...';
+            showMessage("Student loaded successfully.");
+        } catch (error) {
+            showMessage(error.message);
+        }
+    }
 
-            try {
-                const response = await fetch('/students');
+    async function addStudent() {
+        const data = getFormData();
+        if (!validate(data)) return;
 
-                if (!response.ok) {
-                    throw new Error('Failed to load students');
-                }
+        try {
+            const result = await api("/api/students", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(data)
+            });
 
-                const data = await response.json();
+            showMessage("Student added! Database ID: " + result.id);
+            clearForm();
+            await loadStudents();
+        } catch (error) {
+            showMessage(error.message);
+        }
+    }
 
-                if (data.length === 0) {
-                    studentList.textContent = 'No student records found.';
-                    return;
-                }
+    async function editStudent() {
+        const id = document.getElementById("crudId").value.trim();
+        const data = getFormData();
 
-                studentList.innerHTML = data.map(student => `
-                    <div class="student-row">
-
-                        <div>
-                            <span class="label">Database ID:</span>
-                            <span class="value">${escapeHTML(student.id)}</span>
-                        </div>
-
-                        <div>
-                            <span class="label">Student ID:</span>
-                            <span class="value">${escapeHTML(student.student_id)}</span>
-                        </div>
-
-                        <div>
-                            <span class="label">Name:</span>
-                            <span class="value">${escapeHTML(student.name)}</span>
-                        </div>
-
-                        <div>
-                            <span class="label">Program:</span>
-                            <span class="value">${escapeHTML(student.program)}</span>
-                        </div>
-
-                        <div>
-                            <span class="label">Year:</span>
-                            <span class="value">${escapeHTML(student.year)}</span>
-                        </div>
-
-                        <div>
-                            <span class="label">Section:</span>
-                            <span class="value">${escapeHTML(student.section)}</span>
-                        </div>
-
-                    </div>
-                `).join(
-                    '<hr style="border:0;border-top:1px solid #dce7ef;margin:15px 0">'
-                );
-
-            } catch (error) {
-                studentList.textContent =
-                    'Unable to retrieve student records. Check your Flask application.';
-                console.error(error);
-            }
+        if (!/^[1-9]\d*$/.test(id)) {
+            showMessage("Enter a valid Database ID to update.");
+            return;
         }
 
+        if (!validate(data)) return;
 
-        // Safely display database values
-        function escapeHTML(value) {
-            return String(value ?? '').replace(/[&<>"']/g, character => ({
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#39;'
-            })[character]);
+        try {
+            await api("/api/students/" + encodeURIComponent(id), {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(data)
+            });
+
+            showMessage("Student updated successfully!");
+            await loadStudents();
+        } catch (error) {
+            showMessage(error.message);
+        }
+    }
+
+    async function deleteStudent() {
+        const id = document.getElementById("crudId").value.trim();
+
+        if (!/^[1-9]\d*$/.test(id)) {
+            showMessage("Enter a valid Database ID to delete.");
+            return;
         }
 
-    </script>
+        if (!confirm("Delete student with Database ID " + id + "?")) {
+            return;
+        }
 
+        try {
+            await api("/api/students/" + encodeURIComponent(id), {
+                method: "DELETE"
+            });
+
+            showMessage("Student deleted successfully!");
+            clearForm();
+            await loadStudents();
+        } catch (error) {
+            showMessage(error.message);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadStudents);
+</script>
 </body>
 </html>
