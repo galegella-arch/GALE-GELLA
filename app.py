@@ -23,6 +23,7 @@ def get_student():
 @app.route('/hello')
 def say_hello():
     name = request.args.get('name', 'Student')
+
     return jsonify({
         "message": f"Hello, {name}!"
     })

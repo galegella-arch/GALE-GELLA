@@ -21,7 +21,6 @@
         }
 
         input {
-        
             padding: 8px;
         }
 
@@ -32,28 +31,33 @@
         }
     </style>
 </head>
-
 <body>
+
     <h1>Student API Interface</h1>
 
-    <!-- Student API -->
+    <!-- Student Information Section -->
+    <h2>Student Information</h2>
+
     <button onclick="loadStudent()">Load Student Information</button>
+
     <div id="result"></div>
 
     <hr>
 
-    <!-- Greeting API -->
+    <!-- Greeting API Section -->
     <h2>Greeting API</h2>
+
     <input
         type="text"
         id="nameInput"
         placeholder="Enter your first name"
     >
+
     <button onclick="sayHello()">Say Hello</button>
+
     <p id="greeting"></p>
 
     <script>
-        // Load Student Information
         function loadStudent() {
             fetch('/student')
                 .then(response => response.json())
@@ -66,32 +70,28 @@
                         '<p><b>Section:</b> ' + data.section + '</p>';
                 })
                 .catch(error => {
-                    document.getElementById('result').innerHTML =
-                        '<p>Unable to retrieve data.</p>';
-                    console.error(error);
+                    document.getElementById('result').innerText =
+                        'Unable to retrieve data.';
+                    console.error('Error:', error);
                 });
         }
 
-        // Greeting API
         function sayHello() {
-            const name = document.getElementById('nameInput').value.trim();
-            const greeting = document.getElementById('greeting');
-
-            if (!name) {
-                greeting.innerText = 'Please enter your first name.';
-                return;
-            }
+            const name = document.getElementById('nameInput').value;
 
             fetch('/hello?name=' + encodeURIComponent(name))
                 .then(response => response.json())
                 .then(data => {
-                    greeting.innerText = data.message;
+                    document.getElementById('greeting').innerText =
+                        data.message;
                 })
                 .catch(error => {
-                    greeting.innerText = 'Unable to retrieve greeting.';
-                    console.error(error);
+                    document.getElementById('greeting').innerText =
+                        'Unable to retrieve greeting.';
+                    console.error('Error:', error);
                 });
         }
     </script>
+
 </body>
 </html>
